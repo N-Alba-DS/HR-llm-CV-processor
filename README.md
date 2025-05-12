@@ -1,6 +1,6 @@
 # Procesamiento Masivo de Currículums Vitae con LLM
 
-Este repositorio documenta el desarrollo de un sistema automatizado para la extracción estructurada de información desde Currículums Vitae en formato PDF, utilizando modelos de lenguaje de última generación (LLMs).
+Este repositorio documenta el desarrollo de un sistema automatizado para la extracción estructurada de información desde Currículums Vitae en formato PDF, utilizando modelos de lenguaje  (LLMs). Por motivos de protección de datos personales los CV utilizados en el presente repositorio son todos sintéticos careciendo de información real.
 
 ## Objetivo
 
