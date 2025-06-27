@@ -8,7 +8,7 @@ Transformar grandes volúmenes de CVs en archivos estructurados `.csv` que pueda
 
 ## Modelo de Lenguaje Utilizado
 
-Se evaluaron múltiples modelos de lenguaje antes de seleccionar [`Zephyr-7b-beta`](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta), un modelo de tipo instruct open source, por su capacidad de comprensión en español y su rendimiento optimizado. Fue desplegado sobre una GPU Nvidia con carga en 4 bits, lo que permitió alcanzar un tiempo promedio de respuesta de aproximadamente 20 segundos por prompt.
+Se evaluaron múltiples modelos de lenguaje antes de seleccionar [`Zephyr-7b-beta`](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta), un modelo de tipo instruct open source, por su capacidad de comprensión en español y su rendimiento optimizado. Luego de varias pruebas fue desplegado sobre una GPU Nvidia 8gb VRAM cuantificandolo en 4 bits, lo que permitió alcanzar un tiempo promedio de respuesta de aproximadamente 20 segundos por prompt.
 
 ## Preprocesamiento
 
