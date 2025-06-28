@@ -1,57 +1,43 @@
-# Procesamiento Masivo de Currículums Vitae con LLM
+# Unstructured Text Curriculum Vitae Processing with LLMs
 
-Este repositorio documenta el desarrollo de un sistema automatizado para la extracción estructurada de información desde Currículums Vitae en formato PDF, utilizando modelos de lenguaje  (LLMs). Por motivos de protección de datos personales los CV utilizados en el presente repositorio son todos sintéticos careciendo de información real.
+This repository documents the development of an automated system for structured information extraction from Curriculum Vitae in PDF format, using large language models (LLMs). For personal data protection reasons, all CVs included in this repository are synthetic and do not contain real information.
 
-## Objetivo
+## Objective
 
-Transformar grandes volúmenes de CVs en archivos estructurados `.csv` que puedan ser integrados fácilmente en sistemas de gestión de recursos humanos o utilizados para análisis posterior.
+To convert large volumes of CVs into structured `.csv` files that can be easily integrated into human resource management systems or used for further analysis.
 
-## Modelo de Lenguaje Utilizado
+## Language Model Used
 
-Se evaluaron múltiples modelos de lenguaje antes de seleccionar [`Zephyr-7b-beta`](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta), un modelo de tipo instruct open source, por su capacidad de comprensión en español y su rendimiento optimizado. Luego de varias pruebas fue desplegado sobre una GPU Nvidia 8gb VRAM cuantificandolo en 4 bits, lo que permitió alcanzar un tiempo promedio de respuesta de aproximadamente 20 segundos por prompt.
+Several language models were evaluated before selecting [`Zephyr-7b-beta`](https://huggingface.co/HuggingFaceH4/zephyr-7b-beta), an open-source instruction model, for its strong comprehension in Spanish and optimized performance. After several tests, it was deployed on a Nvidia GPU with 8GB VRAM, quantized to 4 bits, achieving an average response time of approximately 20 seconds per prompt.
 
-## Preprocesamiento
+## Preprocessing
 
-Para la lectura y extracción de texto desde archivos PDF, se empleó la librería `pdfplumber`. El texto resultante fue posteriormente procesado por el modelo de lenguaje, guiado mediante un prompt diseñado específicamente para devolver un único objeto JSON por CV, conteniendo los campos clave relevantes para el análisis laboral.
+The `pdfplumber` library was used to read and extract text from PDF files. The resulting text was then processed by the language model, guided by a specifically designed prompt to return a single JSON object per CV, containing key fields relevant for job analysis.
 
-El prompt utilizado fue el siguiente:
+The prompt used was:
 
+```python
 PROMPT_TEMPLATE = """
-Eres un asistente que extrae información estructurada de currículums vitae (CV) en español.
+You are an assistant that extracts structured information from Curriculum Vitae (CVs) in Spanish.
 
-Devuelve exclusivamente un sólo objeto JSON con las siguientes claves y NINGÚN texto adicional:
+Return only a single JSON object with the following keys and NO additional text:
 
-nombre (puede estar en el encabezado)
+nombre (name, may appear in the header)
 
-domicilio
+domicilio (address)
 
-telefono
+telefono (phone number)
 
-titulo (titulo universitario)
+titulo (university degree)
 
-institucion (institución desde la que se egreso si es universitaria)
+institucion (graduated institution, if university-level)
 
-anios_experiencia (respuesta int con un sólo valor suma de los años que van desde el primer trabajo al último)
+anios_experiencia (int: total years from first to last job)
 
-cantidad_trabajos (respuesta int con un sólo valor que será mayor a uno si ha habido cambio de trabajo)
+cantidad_trabajos (int: total number of jobs held)
 
-ultimo_empleador
+ultimo_empleador (last employer)
 
-Curriculum del que se extraera la informacion:
+Curriculum to extract information from:
 """
-
-
-
-
-## Arquitectura del Procesamiento
-
-El sistema se compone de tres funciones principales:
-
-1. **Extracción** del texto desde archivos PDF.
-2. **Inferencia** mediante LLM para obtención del JSON estructurado.
-3. **Agregación y transformación** (ETL) de los resultados en una lista de objetos que luego se convierten en un `DataFrame` de `pandas`.
-
-Finalmente, se exporta el resultado como un archivo `.csv`, listo para ser utilizado en sistemas de análisis o carga automatizada.
-
----
 
